@@ -20,7 +20,7 @@ class CustomDataset(Dataset):
             if os.path.isdir(label_dir):
                 for image_file in os.listdir(label_dir):
                     self.image_paths.append(os.path.join(label_dir, image_file))
-                    self.labels.append(0 if label == "label A" else 1)
+                    self.labels.append(0 if label == "A" else 1)
     
     def __len__(self):
         return len(self.image_paths)
