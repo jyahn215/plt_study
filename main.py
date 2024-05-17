@@ -6,6 +6,13 @@ from torchvision import transforms
 from PIL import Image
 import os
 from tqdm import tqdm
+import numpy as np
+import random
+
+random.seed(0)
+np.random.seed(0)
+torch.manual_seed(0)
+torch.cuda.manual_seed(0)
 
 # Custom Dataset
 class CustomDataset(Dataset):
