@@ -82,10 +82,10 @@ model = SimpleCNN()
 device = torch.device("mps")
 model = model.to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.0001)
+optimizer = optim.Adam(model.parameters(), lr=0.0002)
 
 # Training Function
-def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epochs=20):
+def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epochs=80):
     best_acc = 0
     for epoch in range(num_epochs):
         model.train()
@@ -113,7 +113,7 @@ def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epo
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
         val_acc = correct / total
-        print(f"Validation Accuracy: {val_acc:.4f}")
+        print(f"Validation Accuracy: {val_acc:.4f}, Best Accuracy: {best_acc:.4f}")
 
         if best_acc < val_acc:
             best_acc = val_acc
