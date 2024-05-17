@@ -85,8 +85,8 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # Training Function
-best_loss = float('inf')
 def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epochs=20):
+    best_loss = float('inf')
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
