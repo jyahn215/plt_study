@@ -46,7 +46,7 @@ transform = transforms.Compose([
 dataset = CustomDataset(root_dir='./data/plt_1_processed', transform=transform)
 
 # Train/Validation/Test Split
-train_size = int(0.7 * len(dataset))
+train_size = int(0.6 * len(dataset))
 valid_size = int(0.2 * len(dataset))
 test_size = len(dataset) - train_size - valid_size
 train_dataset, valid_dataset, test_dataset = random_split(dataset, [train_size, valid_size, test_size])
