@@ -10,22 +10,22 @@ def process_images(input_folder, output_folder, threshold=20, crop_size=20):
     if not os.path.exists(os.path.join(output_folder, "B")):
         os.makedirs(os.path.join(output_folder, "B"))
 
-    # num_list = []
-    # for label in ["A", "B"]:
-    #     for repeat in range(1, 4):
-    #         repeat = str(repeat)
-    #         folder_path = os.path.join(input_folder, label, repeat)
-    #         tqdm_obj = tqdm(os.listdir(folder_path), desc=f"label: {label},  repeat: {repeat}")
-    #         for img_name in tqdm_obj:
-    #             img_path = os.path.join(folder_path, img_name)
-    #             image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    #             image = image.reshape(-1)
-    #             num_list.append(image)
-    # num_list = np.concatenate(num_list)
-    # num_list = num_list[num_list < 100]
-    # plt.hist(num_list, bins=50)
-    # plt.show()
-    # print("set threshold to 20")
+    num_list = []
+    for label in ["A", "B"]:
+        for repeat in range(1, 4):
+            repeat = str(repeat)
+            folder_path = os.path.join(input_folder, label, repeat)
+            tqdm_obj = tqdm(os.listdir(folder_path), desc=f"label: {label},  repeat: {repeat}")
+            for img_name in tqdm_obj:
+                img_path = os.path.join(folder_path, img_name)
+                image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+                image = image.reshape(-1)
+                num_list.append(image)
+    num_list = np.concatenate(num_list)
+    num_list = num_list[num_list < 100]
+    plt.hist(num_list, bins=50)
+    plt.show()
+    print("set threshold to 20")
 
     num_list = [0, 0]
     for label in ["A", "B"]:
