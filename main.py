@@ -86,7 +86,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # Training Function
 def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epochs=20):
-    best_loss = float('inf')
+    best_acc = 0
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -101,15 +101,8 @@ def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epo
         
         epoch_loss = running_loss / len(train_loader.dataset)
         print(f"Epoch {epoch}/{num_epochs-1}, Loss: {epoch_loss:.4f}")
-        if best_loss > epoch_loss:
-            best_loss = epoch_loss
-            torch.save(model.state_dict(), f"./ckpts/best_model.pt")
-        elif epoch_loss > 1.15 * best_loss:
-            print("Early stopping")
-            break
 
         model.eval()
-        model.load_state_dict(torch.load(f"./ckpts/best_model.pt"))
         correct = 0
         total = 0
         with torch.no_grad():
@@ -122,11 +115,19 @@ def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epo
         val_acc = correct / total
         print(f"Validation Accuracy: {val_acc:.4f}")
 
+        if best_acc < val_acc:
+            best_acc = val_acc
+            torch.save(model.state_dict(), f"./ckpts/best_model.pt")
+        elif best_acc > 1.1 * val_acc:
+            print("Early stopping")
+            break
+
 # Train the Model
 train_model(model, train_loader, valid_loader, criterion, optimizer)
 
 # Test the Model
 model.eval()
+model.load_state_dict(torch.load("./ckpts/best_model.pt"))
 correct = 0
 total = 0
 with torch.no_grad():
