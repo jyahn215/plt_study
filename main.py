@@ -103,12 +103,13 @@ def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epo
         print(f"Epoch {epoch}/{num_epochs-1}, Loss: {epoch_loss:.4f}")
         if best_loss > epoch_loss:
             best_loss = epoch_loss
-            torch.save(model.state_dict(), f"./ckpts/best_model_{epoch}.pt")
+            torch.save(model.state_dict(), f"./ckpts/best_model.pt")
         elif epoch_loss > 1.15 * best_loss:
             print("Early stopping")
             break
 
         model.eval()
+        model.load_state_dict(torch.load(f"./ckpts/best_model.pt"))
         correct = 0
         total = 0
         with torch.no_grad():
